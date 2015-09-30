@@ -1,0 +1,4 @@
+service_name: authentication-service
+repository_technique: jpa
+group_id: org.lecture
+artifact_id: authentication-service
