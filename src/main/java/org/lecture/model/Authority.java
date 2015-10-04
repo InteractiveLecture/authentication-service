@@ -18,16 +18,19 @@ package org.lecture.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * Entity that represents Authoritys.
  * @author Rene Richter
  */
 @Entity
+@Table(name = "authorities")
 public class Authority extends BaseEntity implements GrantedAuthority {
 
-  private Long id;
   private String authority;
+  @ManyToOne
   private User user;
   
 
@@ -37,21 +40,10 @@ public class Authority extends BaseEntity implements GrantedAuthority {
   /**
    * a convenience constructor.
    */
-  public  Authority(Long id,String authority,User user) {
-
-    this.id = id;
+  public  Authority(String authority,User user) {
     this.authority = authority;
     this.user = user;
     
-  }
-
-  
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Long getId() {
-    return this.id;
   }
   
   public void setAuthority(String authority) {

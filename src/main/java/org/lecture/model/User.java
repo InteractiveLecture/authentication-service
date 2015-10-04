@@ -15,11 +15,11 @@ package org.lecture.model;
 * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 */
 
-import org.apache.http.auth.AUTH;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,12 +29,16 @@ import java.util.List;
  * @author Rene Richter
  */
 @Entity
+@Table(name="users")
 public class User extends BaseEntity implements UserDetails {
 
+  @Column(unique = true)
   private String username;
+  @JsonIgnore
   private String password;
   private boolean enabled;
-  private List<Authority> authoities = new ArrayList<>();
+  @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+  private List<Authority> authorities = new ArrayList<>();
   
 
   public User(){}
@@ -51,12 +55,8 @@ public class User extends BaseEntity implements UserDetails {
     
   }
 
-  public List<Authority> getAuthoities() {
-    return authoities;
-  }
-
-  public void setAuthoities(List<Authority> authoities) {
-    this.authoities = authoities;
+  public void setAuthorities(List<Authority> authorities) {
+    this.authorities = authorities;
   }
 
   public void addAuthority(Authority authority) {
@@ -82,7 +82,7 @@ public class User extends BaseEntity implements UserDetails {
 
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
@@ -92,7 +92,7 @@ public class User extends BaseEntity implements UserDetails {
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return false;
+    return true;
   }
 
   public void setPassword(String password) {
@@ -101,7 +101,7 @@ public class User extends BaseEntity implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.authoities;
+    return this.authorities;
   }
 
   public String getPassword() {

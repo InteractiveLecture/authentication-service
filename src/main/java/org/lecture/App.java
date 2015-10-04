@@ -1,4 +1,4 @@
-package org.lecture.main;
+package org.lecture;
 
 /*
 * Copyright (c) 2015 Rene Richter.
@@ -19,23 +19,31 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.boot.orm.jpa.EntityScan;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-
-@EnableAutoConfiguration
-@EnableDiscoveryClient
 @SpringBootApplication
-@ComponentScan(basePackages = {"org.lecture"})
+@EnableZuulProxy
+@EnableRedisHttpSession
+@EnableWebMvc
+@EnableJpaRepositories(basePackages = "org.lecture.repository")
+@EntityScan(basePackages = "org.lecture.model")
+@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 public class App implements CommandLineRunner {
 
   public static void main(String[] args) {
     SpringApplication.run(App.class, args);
 
   }
-
   @Override
   public void run(String... args) throws Exception {
+
+
 
   }
 }

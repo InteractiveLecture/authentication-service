@@ -17,13 +17,9 @@ package org.lecture.controller;
 
 import org.lecture.model.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.hateoas.EntityLinks;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
 * A basecontroller for shared functionality.
@@ -44,14 +40,7 @@ public abstract class BaseController {
   */
   public <T extends BaseEntity> ResponseEntity<?> createEntity(T newEntity) {
 
-    return ResponseEntity
-        .created(entityLinks.linkForSingleResource(newEntity).toUri()).build();
-  }
-
-
-  @ExceptionHandler(ResourceNotFoundException.class)
-  @ResponseStatus(HttpStatus.NOT_FOUND)
-  public String handleNotFound(ResourceNotFoundException ex) {
-   return ex.toString();
+    return null;/* ResponseEntity
+        .created(entityLinks.linkForSingleResource(newEntity).toUri()).build();*/
   }
 }

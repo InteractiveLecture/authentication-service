@@ -80,13 +80,13 @@ public class UserController extends BaseController {
   /**
    * Returns one User.
    *
-   * @param id the id of the  user to return.
+   * @param username the username of the  user to return.
    * @return a response.
    */
-  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public ResponseEntity<UserResource> getOne(@PathVariable Long id) {
+  @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+  public ResponseEntity<UserResource> getOne(@PathVariable String username) {
     UserResource result
-        = userAssembler.toResource(userRepository.findOne(id));
+        = userAssembler.toResource(userRepository.findByUsername(username));
     return ResponseEntity.ok().body(result);
   }
 

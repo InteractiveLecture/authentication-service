@@ -11,19 +11,24 @@ spring:
       returnBodyOnCreate: false #change if a body should be returned on creating a new entity
       returnBodyOnupdate: false #change if a body should be returned on updating an entity
   
-    jpa:
-      open-in-view: true
-      show-sql: true
-      repositories.enabled: true # if spring data repository support is enabled
+  jpa:
+    open-in-view: true
+    show-sql: true
+    repositories.enabled: true # if spring data repository support is enabled
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.PostgreSQLDialect"
+    hibernate:
+      ddl-auto: "create-drop"
 
   datasource:
     initialize: true # populate using data.sql
     sql-script-encoding: UTF-8 # a charset for reading SQL scripts
     separator: ; # statement separator in SQL initialization scripts
-    #driver-class-name: # JDBC Settings...
-    #url:
-    #username:
-    #password:
+    driver-class-name: "org.postgresql.Driver"
+    url: "jdbc:postgresql:users"
+    username: users
+    password: users
     #jndi-name: # For JNDI lookup (class, url, username & password are ignored when set)
     #max-active:100 # Advanced configuration...
     #max-idle:8
