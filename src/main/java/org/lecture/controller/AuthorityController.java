@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Rene Richter
  */
 @RestController
-@RequestMapping("/authoritys")
+@RequestMapping("/authorities")
 @ExposesResourceFor(Authority.class)
 public class AuthorityController extends BaseController {
 

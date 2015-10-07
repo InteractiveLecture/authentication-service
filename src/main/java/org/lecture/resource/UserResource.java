@@ -17,6 +17,10 @@ package org.lecture.resource;
 
 import org.lecture.model.User;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A User-resource.
@@ -25,19 +29,26 @@ import org.springframework.hateoas.ResourceSupport;
 public class UserResource extends ResourceSupport {
   
   private String username;
-  
-  private String password;
-  
+
+  private List<String> authorities;
+
 
   /**
    * Reads all attributes from entity that should get serialized.
    */
   public  UserResource( User entity) {
-    
     this.username = entity.getUsername();
-    
-    this.password = entity.getPassword();
-    
+    this.authorities = entity.getAuthorities().stream()
+                             .map(GrantedAuthority::getAuthority)
+                             .collect(Collectors.toList());
+  }
+
+  public List<String> getAuthorities() {
+    return authorities;
+  }
+
+  public void setAuthorities(List<String> authorities) {
+    this.authorities = authorities;
   }
 
   
@@ -48,13 +59,6 @@ public class UserResource extends ResourceSupport {
   public String getUsername() {
     return this.username;
   }
-  
-  public void setPassword(String password) {
-    this.password = password;
-  }
 
-  public String getPassword() {
-    return this.password;
-  }
   
 }

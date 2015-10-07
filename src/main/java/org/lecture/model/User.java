@@ -107,5 +107,11 @@ public class User extends BaseEntity implements UserDetails {
   public String getPassword() {
     return this.password;
   }
-  
+
+  @Override
+  public String toString() {
+    return "username: "+username+"\n" +
+        "password: "+password +"\n" +
+        "id: " +getId();
+  }
 }

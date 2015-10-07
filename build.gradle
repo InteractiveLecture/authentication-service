@@ -49,6 +49,7 @@ task checkstyle(type: Checkstyle) {
 dependencyManagement {
   imports {
     mavenBom "org.springframework.cloud:spring-cloud-starter-parent:Angel.SR3"
+    mavenBom 'org.springframework.data:spring-data-releasetrain:Gosling-RELEASE'
   }
 }
 
@@ -65,7 +66,12 @@ targetCompatibility = 1.8
 
 dependencies {
   compile("org.springframework.boot:spring-boot-starter-web")
-  compile("org.springframework.boot:spring-boot-starter-data-jpa")
+  compile("org.springframework.boot:spring-boot-starter")
+  compile 'org.springframework.data:spring-data-jpa'
+
+  //compile("org.springframework.boot:spring-boot-starter-data-jpa")
+  compile("org.springframework.boot:spring-boot-starter-jdbc")
+  compile "org.hibernate:hibernate-entitymanager:5.0.2.Final"
   compile('org.springframework.boot:spring-boot-starter-security')
   compile 'org.springframework.boot:spring-boot-starter-redis'
   compile 'org.springframework.session:spring-session:1.0.2.RELEASE'
@@ -73,9 +79,6 @@ dependencies {
   compile('org.springframework.cloud:spring-cloud-starter-eureka')
   compile('org.springframework.cloud:spring-cloud-starter-zuul')
   compile('org.springframework.cloud:spring-cloud-starter-ribbon')
-
-
-
 
   compile("org.springframework.amqp:spring-rabbit")
 

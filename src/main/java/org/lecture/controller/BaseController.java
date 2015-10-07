@@ -39,8 +39,7 @@ public abstract class BaseController {
   * @return The formal Response for the childcontroller.
   */
   public <T extends BaseEntity> ResponseEntity<?> createEntity(T newEntity) {
-
-    return null;/* ResponseEntity
-        .created(entityLinks.linkForSingleResource(newEntity).toUri()).build();*/
+    return  ResponseEntity
+        .created(entityLinks.linkForSingleResource(newEntity).toUri()).build();
   }
 }
