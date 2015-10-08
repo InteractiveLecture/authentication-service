@@ -1,0 +1,9 @@
+[Unit]
+Description=authentication-service
+After=syslog.target
+
+[Service]
+ExecStart=/opt/authentication-service/bin/authentication-service
+
+[Install]
+WantedBy=multi-user.target
