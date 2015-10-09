@@ -39,7 +39,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.security.KeyPair;
 
 @SpringBootApplication
-@EnableZuulProxy
+//@EnableZuulProxy
 @EnableWebMvc
 @EnableJpaRepositories(basePackages = "org.lecture.repository")
 @EntityScan(basePackages = "org.lecture.model")
