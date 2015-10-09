@@ -3,18 +3,15 @@ package org.lecture.config;
 import org.lecture.repository.UserRepository;
 import org.lecture.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.session.web.http.HeaderHttpSessionStrategy;
-import org.springframework.session.web.http.HttpSessionStrategy;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -30,25 +27,15 @@ import java.io.IOException;
  * Created by rene on 04.10.15.
  */
 @Configuration
+//@EnableResourceServer
 public class GatewayConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   UserRepository userRepository;
 
-  @Autowired
-  public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(new UserDetailServiceImpl(userRepository));
-  }
-
-
-  @Bean
-  public JedisConnectionFactory connectionFactory() {
-    return new JedisConnectionFactory();
-  }
-
-  @Bean
-  public HttpSessionStrategy httpSessionStrategy() {
-    return new HeaderHttpSessionStrategy();
   }
 
   @Override
