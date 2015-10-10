@@ -30,7 +30,7 @@ public class OauthServerConfig {
   protected static class ResourceServerConfiguration extends
       ResourceServerConfigurerAdapter {
 
-    @Override
+    /*@Override
     public void configure(ResourceServerSecurityConfigurer resources) {
       // @formatter:off
       resources
@@ -45,7 +45,7 @@ public class OauthServerConfig {
           .authorizeRequests()
           .antMatchers("/users").authenticated();
       // @formatter:on
-    }
+    }*/
 
   }
 
