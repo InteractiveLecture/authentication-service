@@ -26,11 +26,9 @@ public class LoginController {
   private UserAssembler userAssembler;
 
   @RequestMapping(method = RequestMethod.GET, produces = "application/hal+json")
-  public ResponseEntity<UserResource> login(@AuthenticationPrincipal User activeUser) {
-    System.out.println(activeUser);
-    UserResource resource = new UserResource(activeUser);
-    resource.add(linkTo(LoginController.class).withRel("self"));
-    return ResponseEntity.ok(resource);
+  public Principal login(Principal principal) {
+
+    return principal;
 
   }
 }
