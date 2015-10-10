@@ -27,8 +27,7 @@ import java.io.IOException;
  * Created by rene on 04.10.15.
  */
 @Configuration
-//@EnableResourceServer
-public class GatewayConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   UserRepository userRepository;

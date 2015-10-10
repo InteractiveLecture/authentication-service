@@ -1,8 +1,8 @@
 spring:
  config:
-   name: "gateway-service"
+   name: "authentication-service"
  application:
-   name: "gateway-service"
+   name: "authentication-service"
  cloud:
    config:
      failFast: true
@@ -13,4 +13,6 @@ spring:
 eureka:
  client:
    serviceUrl:
-     defaultZone: http://localhost:8761/eureka/
+     defaultZone: http://discovery-service:8761/eureka/
+ instance:
+  preferIpAddress: true
