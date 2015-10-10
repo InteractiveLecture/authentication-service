@@ -43,7 +43,7 @@ public class OauthServerConfig {
       // @formatter:off
       http
           .authorizeRequests()
-          .antMatchers("/users").authenticated();
+          .antMatchers("/users","/me","/authorities").authenticated();
       // @formatter:on
     }
 
@@ -91,7 +91,7 @@ public class OauthServerConfig {
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer)
         throws Exception {
-      oauthServer.allowFormAuthenticationForClients() //curl -v  http://localhost:8080/oauth/token -d username=user -d password="im log nachschauen" -d grant_type=password -d client_id=acme -d client_secret=acmesecret -H "Accept: application/json"
+      oauthServer.allowFormAuthenticationForClients() //curl -v  http://localhost:8080/oauth/token -d username=user -d password="im log nachschauen" -d grant_type=password -d client_id=user-web-client -d client_secret=user-web-client-secret -H "Accept: application/json"
           .tokenKeyAccess("permitAll()").checkTokenAccess(
           "isAuthenticated()");
 
