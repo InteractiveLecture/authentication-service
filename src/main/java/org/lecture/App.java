@@ -30,7 +30,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableJpaRepositories(basePackages = "org.lecture.repository")
 @EntityScan(basePackages = "org.lecture.model")
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
-@EnableDiscoveryClient
 public class App extends AuthorizationServerConfigurerAdapter {
 
   public static void main(String[] args) {

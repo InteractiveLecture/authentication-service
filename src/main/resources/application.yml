@@ -26,7 +26,7 @@ spring:
     sql-script-encoding: UTF-8 # a charset for reading SQL scripts
     separator: ; # statement separator in SQL initialization scripts
     driver-class-name: "org.postgresql.Driver"
-    url: "jdbc:postgresql:users"
+    url: "jdbc:postgresql://postgres/users"
     username: users
     password: users
     #jndi-name: # For JNDI lookup (class, url, username & password are ignored when set)
