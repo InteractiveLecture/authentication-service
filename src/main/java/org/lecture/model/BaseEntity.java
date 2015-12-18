@@ -20,6 +20,7 @@ import org.springframework.hateoas.Identifiable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.util.UUID;
 
 
 /**
@@ -27,17 +28,16 @@ import javax.persistence.MappedSuperclass;
  * @author Rene Richter
  */
 @MappedSuperclass
-public class BaseEntity implements Identifiable<Long>  {
+public class BaseEntity {
 
   @Id
-  @GeneratedValue
-  private long id;
+  private String id;
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(String id) {
     this.id = id;
   }
 }

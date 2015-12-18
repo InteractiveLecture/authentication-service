@@ -38,8 +38,6 @@ public abstract class BaseController {
   * @param <T>       Type of the entity that should get created
   * @return The formal Response for the childcontroller.
   */
-  public <T extends BaseEntity> ResponseEntity<?> createEntity(T newEntity) {
-    return  ResponseEntity
-        .created(entityLinks.linkForSingleResource(newEntity).toUri()).build();
+  public <T extends BaseEntity> void createEntity(T newEntity) {
   }
 }

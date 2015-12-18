@@ -1,2 +1,2 @@
-INSERT INTO users(id,username,password,enabled) VALUES (1,'admin','admin',true);
-INSERT INTO authorities(id,user_id,authority) VALUES (1,1,'admin');
+INSERT INTO users(id,username,password,enabled) VALUES ('c970bb69-286b-49c9-aab6-7d98d59d6485','admin','admin',true);
+INSERT INTO authorities(id,user_id,authority) VALUES ('37fb2fcf-864b-4edb-8c31-82fcddb0a4cb','c970bb69-286b-49c9-aab6-7d98d59d6485','role_admin');

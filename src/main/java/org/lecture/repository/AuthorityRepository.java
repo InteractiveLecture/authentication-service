@@ -24,6 +24,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 * A repository for authoritys
 * @author Rene Richter
 */
-public interface AuthorityRepository extends JpaRepository<Authority,Long> {
+public interface AuthorityRepository extends JpaRepository<Authority,String> {
 
 }

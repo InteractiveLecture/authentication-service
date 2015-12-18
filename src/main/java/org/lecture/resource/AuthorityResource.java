@@ -24,7 +24,7 @@ import org.springframework.hateoas.ResourceSupport;
  */
 public class AuthorityResource extends ResourceSupport {
   
-  private Long id;
+  private String id;
   
   private String authority;
   
@@ -45,7 +45,7 @@ public class AuthorityResource extends ResourceSupport {
   }
 
   
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 

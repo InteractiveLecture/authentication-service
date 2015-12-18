@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
  * @author Rene Richter
  */
 public class UserResource extends ResourceSupport {
+
+  private String id;
   
   private String username;
 

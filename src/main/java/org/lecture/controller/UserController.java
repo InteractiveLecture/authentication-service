@@ -15,7 +15,7 @@ package org.lecture.controller;
 * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 */
 
-import org.lecture.assembler.UserAssembler;
+import nats.client.Nats;
 import org.lecture.model.User;
 import org.lecture.resource.UserResource;
 import org.lecture.repository.UserRepository;
@@ -44,26 +44,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController extends BaseController {
 
   @Autowired
-  UserAssembler userAssembler;
-
-  @Autowired
   UserRepository userRepository;
+
+   @Autowired
+   private Nats nats;
 
 
   /**
    * Returns a list of users.
    *
    * @param pageable  The number of items, gotten through the url
-   * @param assembler the assembler injected by spring.
    * @return a Resource representing the page.
    */
   @RequestMapping(method = RequestMethod.GET)
-  public PagedResources<User> getAll(@PageableDefault(size = 20, page = 0)
-                                         Pageable pageable,
-                                         PagedResourcesAssembler assembler) {
+  public Page<User> getAll(@PageableDefault(size = 20, page = 0)
+                                         Pageable pageable) {
 
-    Page<User> pageResult = this.userRepository.findAll(pageable);
-    return assembler.toResource(pageResult, userAssembler);
+    return  this.userRepository.findAll(pageable);
   }
 
   /**
@@ -72,9 +69,10 @@ public class UserController extends BaseController {
    *              jackson.
    * @return A respoonse containing a link to the new resource.
    */
-  @RequestMapping(method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestBody User entity) {
-    return super.createEntity(this.userRepository.save(entity));
+  @RequestMapping(method = RequestMethod.POST,consumes = "application/json;charset=UTF-8")
+  public void create(@RequestBody User entity) {
+    this.userRepository.save(entity);
+    nats.publish("authentication-service.create-user",entity.getId());
   }
 
   /**
@@ -84,20 +82,19 @@ public class UserController extends BaseController {
    * @return a response.
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public ResponseEntity<UserResource> getOne(@PathVariable Long id) {
-    UserResource result
-        = userAssembler.toResource(userRepository.findOne(id));
-    return ResponseEntity.ok().body(result);
+  public UserResource getOne(@PathVariable String id) {
+    return new UserResource(userRepository.findOne(id));
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(@PathVariable Long id) {
+  public ResponseEntity<?> delete(@PathVariable String id) {
     userRepository.delete(id);
+    nats.publish("authentication-service.delete-user",id);
     return ResponseEntity.noContent().build();
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public ResponseEntity<?> update(@PathVariable Long id,
+  public ResponseEntity<?> update(@PathVariable String id,
                                   @RequestBody User newValues) {
     newValues.setId(id);
     userRepository.save(newValues);

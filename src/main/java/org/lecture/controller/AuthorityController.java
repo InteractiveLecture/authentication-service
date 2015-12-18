@@ -15,7 +15,6 @@ package org.lecture.controller;
 * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 */
 
-import org.lecture.assembler.AuthorityAssembler;
 import org.lecture.model.Authority;
 import org.lecture.resource.AuthorityResource;
 import org.lecture.repository.AuthorityRepository;
@@ -43,8 +42,6 @@ import org.springframework.web.bind.annotation.RestController;
 @ExposesResourceFor(Authority.class)
 public class AuthorityController extends BaseController {
 
-  @Autowired
-  AuthorityAssembler authorityAssembler;
 
   @Autowired
   AuthorityRepository authorityRepository;
@@ -54,16 +51,12 @@ public class AuthorityController extends BaseController {
    * Returns a list of authoritys.
    *
    * @param pageable  The number of items, gotten through the url
-   * @param assembler the assembler injected by spring.
    * @return a Resource representing the page.
    */
   @RequestMapping(method = RequestMethod.GET)
-  public PagedResources<Authority> getAll(@PageableDefault(size = 20, page = 0)
-                                         Pageable pageable,
-                                         PagedResourcesAssembler assembler) {
-
-    Page<Authority> pageResult = this.authorityRepository.findAll(pageable);
-    return assembler.toResource(pageResult, authorityAssembler);
+  public Page<Authority> getAll(@PageableDefault(size = 20, page = 0)
+                                         Pageable pageable) {
+    return this.authorityRepository.findAll(pageable);
   }
 
   /**
@@ -73,8 +66,8 @@ public class AuthorityController extends BaseController {
    * @return A respoonse containing a link to the new resource.
    */
   @RequestMapping(method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestBody Authority entity) {
-    return super.createEntity(this.authorityRepository.save(entity));
+  public void create(@RequestBody Authority entity) {
+    this.authorityRepository.save(entity);
   }
 
   /**
@@ -84,20 +77,18 @@ public class AuthorityController extends BaseController {
    * @return a response.
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public ResponseEntity<AuthorityResource> getOne(@PathVariable Long id) {
-    AuthorityResource result
-        = authorityAssembler.toResource(authorityRepository.findOne(id));
-    return ResponseEntity.ok().body(result);
+  public AuthorityResource getOne(@PathVariable String id) {
+    return new AuthorityResource(authorityRepository.findOne(id));
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(@PathVariable Long id) {
+  public ResponseEntity<?> delete(@PathVariable String id) {
     authorityRepository.delete(id);
     return ResponseEntity.noContent().build();
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public ResponseEntity<?> update(@PathVariable Long id,
+  public ResponseEntity<?> update(@PathVariable String id,
                                   @RequestBody Authority newValues) {
     newValues.setId(id);
     authorityRepository.save(newValues);

@@ -1,5 +1,7 @@
 package org.lecture.config;
 
+import nats.client.Nats;
+import nats.client.NatsConnector;
 import org.lecture.model.User;
 import org.lecture.repository.UserRepository;
 import org.lecture.service.UserDetailServiceImpl;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -34,6 +37,12 @@ import java.util.Map;
 @Configuration
 public class OauthServerConfig {
 
+
+  @Bean
+  public Nats nats() {
+    return new NatsConnector().addHost("nats://nats:4222").connect();
+  }
+
   @Configuration
   @EnableResourceServer
   protected static class ResourceServerConfiguration extends
@@ -51,8 +60,11 @@ public class OauthServerConfig {
     public void configure(HttpSecurity http) throws Exception {
       // @formatter:off
       http
+          .csrf().disable()
           .authorizeRequests()
-          .antMatchers("/users","/me","/authorities").authenticated();
+          .antMatchers(HttpMethod.POST,"/users").permitAll()
+          .antMatchers("/users","/me","/authorities").authenticated()
+          .antMatchers("/users/**/authorities","/authorities").hasRole("admin");
       // @formatter:on
     }
 

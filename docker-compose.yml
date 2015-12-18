@@ -1,0 +1,21 @@
+authentication:
+  image: "richterrettich/authentication-service:latest"
+  links:
+    - "authpostgres:postgres"
+    - "nats:nats"
+  ports:
+    - "8080:8080"
+
+authpostgres:
+  image: "postgres"
+  expose:
+    - 5432
+  environment:
+    - "SERVICE_IGNORE=1"
+    - "POSTGRES_PASSWORD=users"
+    - "POSTGRES_USER=users"
+
+nats:
+  image: "nats"
+  ports:
+  - "4222:4222"
