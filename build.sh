@@ -1,4 +1,4 @@
 #!/bin/bash
-
 ./gradlew clean build
-docker build -t richterrettich/authentication-service:latest .
+docker build -t openservice/authentication-service:latest .
+
