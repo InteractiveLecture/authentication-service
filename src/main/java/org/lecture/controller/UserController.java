@@ -26,6 +26,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,9 +71,14 @@ public class UserController extends BaseController {
    * @return A respoonse containing a link to the new resource.
    */
   @RequestMapping(method = RequestMethod.POST,consumes = "application/json;charset=UTF-8")
-  public void create(@RequestBody User entity) {
-    this.userRepository.save(entity);
-    nats.publish("authentication-service.create-user",entity.getId());
+  public ResponseEntity<?> create(@RequestBody User entity) {
+    User user = this.userRepository.findByUsername(entity.getUsername());
+    if (user == null) {
+      this.userRepository.save(entity);
+      nats.publish("authentication-service.create-user",entity.getId());
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.status(HttpStatus.CONFLICT).build();
   }
 
   /**
