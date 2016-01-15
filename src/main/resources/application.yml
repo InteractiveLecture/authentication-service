@@ -10,7 +10,7 @@ spring:
       #defaultMediaType: #change default media type to use when none is specified
       returnBodyOnCreate: false #change if a body should be returned on creating a new entity
       returnBodyOnupdate: false #change if a body should be returned on updating an entity
-  
+
   jpa:
     open-in-view: true
     show-sql: true
@@ -36,9 +36,9 @@ spring:
     #initial-size:10
     #validation-query:
 
-  logging:
-    level:
-      org.springframework.security: DEBUG
+logging:
+  level:
+    org.springframework.web: INFO
 
 
   oauth2:

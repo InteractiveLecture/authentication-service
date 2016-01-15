@@ -75,7 +75,7 @@ public class UserController extends BaseController {
     User user = this.userRepository.findByUsername(entity.getUsername());
     if (user == null) {
       this.userRepository.save(entity);
-      nats.publish("authentication-service.create-user",entity.getId());
+      nats.publish("authentication-service.user-created",entity.getId());
       return ResponseEntity.noContent().build();
     }
     return ResponseEntity.status(HttpStatus.CONFLICT).build();

@@ -16,7 +16,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @RequestMapping("/me")
 public class LoginController {
 
-
   @RequestMapping(method = RequestMethod.GET, produces = "application/hal+json")
   public Principal login(Principal principal) {
     return principal;

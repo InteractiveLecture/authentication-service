@@ -34,7 +34,6 @@ public class User extends BaseEntity implements UserDetails {
 
   @Column(unique = true)
   private String username;
-  @JsonIgnore
   private String password;
   private boolean enabled;
   @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
